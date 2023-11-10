@@ -1,42 +1,116 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+
+/* Navbar */
+.sk-navbar{
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 98;
+}
+.sk-navbar-toggle i{
+    font-size: 28px;
+    font-weight: 600;
+}
+.sk-navbar-offcanvas{
+    position: fixed;
+    top:0;
+    right: 0;
+    height: 100vh;
+    width:0;
+    background-color:white;
+    z-index: 99;
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+.sk-navbar-offcanvas.active{
+    width:300px;
+}
+.sk-offcanvas-close i{
+    font-size: 28px;
+    font-weight: 600;
+}
+.sk-offcanvas-menu li{
+    white-space: nowrap;
+}
+.sk-offcanvas-menu a{
+    font-size: 20px;
+    font-weight: 500;
+    display: block;
+}
+.sk-offcanvas-menu a.active{
+    color: var(--bg-red);
+}
+.sk-offcanvas-menu i{
+    color: black;
+}
+.sk-offcanvas-menu button{
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.sk-login {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("./assets/Images/login-bg.jpg");
+    background-size: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex; /* Add display: flex; to make sure .sk-login-container is centered */
+    align-items: center; /* Vertically center the child elements */
+    justify-content: center; /* Horizontally center the child elements */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.sk-login-container {
+    position: relative; /* Change to relative so it stays within the .sk-login flow */
+    z-index: 97;
+    width: 500px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 10px;
+    padding: 30px 30px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.sk-login-container h6{
+    font-weight: 600;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.sk-login-form input{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px 10px;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sk-login-form input[type=submit]{
+    background:none;
+    font-size: 18px;
+    font-weight:500;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.sk-login-form-password{
+    border-radius: 5px;
+    width: 100%;
+    background-color: white;
+    overflow: hidden;
 }
-
-.card {
-  padding: 2em;
+.sk-login-form-password button{
+    border: none;
+    background:none;
 }
-
-.read-the-docs {
-  color: #888;
+.sk-login-form-password i{
+    font-size: 22px;
+    padding-right: 10px;
+}
+.sk-login-form input::placeholder{
+    font-size: 18px;
+    color: #4f4d4d;
+}
+/* media Query */
+@media (max-width: 575.98px) {
+    .sk-login-container{
+        width: 90%;
+    }
 }
