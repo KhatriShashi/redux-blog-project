@@ -13,7 +13,7 @@ export class BlogServices{
         this.storage=new Storage(this.client);
     }
 
-    async createPost({title,slug,content,featuredImage,status,userId}){
+    async createPost({title,slug,content,featuredImage,status,userId,postedBy,description}){
         try {
             return await this.databases.createDocument(
                 Config.appWriteDatabaseId,
@@ -21,17 +21,19 @@ export class BlogServices{
                 ID.unique(),
                 {
                     title,
-                    content,
+                    slug,
                     featuredImage,
+                    content,
                     status,
                     userId,
-                    slug
+                    postedBy,
+                    description
                 })
         } catch (error) {
             throw error;
         }
     }
-    async updatePost({title,slug,content,featuredImage,status,userId,blogId}){
+    async updatePost({blogId,title,slug,content,featuredImage,status,userId}){
         try {
             return await this.databases.updateDocument(
                 Config.appWriteDatabaseId,
@@ -39,11 +41,13 @@ export class BlogServices{
                 blogId,
                 {
                     title,
-                    content,
+                    slug,
                     featuredImage,
+                    content,
                     status,
                     userId,
-                    slug
+                    postedBy,
+                    description
                 }
             )
         } catch (error) {
@@ -72,6 +76,19 @@ export class BlogServices{
             
         } catch (error) {
             throw error;
+        }
+    }
+    async getUserAllPost({userId}){
+        try{
+            return await this.databases.listDocuments(
+                Config.appWriteDatabaseId,
+                Config.appWriteCollectionId,
+                [
+                    Query.equal('userId',[userId])
+                ]
+                );
+        }catch(error){
+            throw error
         }
     }
     async getAllActivePost(queries=[Query.equal("status",["active"])]){
@@ -111,10 +128,10 @@ export class BlogServices{
         }
     }
     // File Preview
-    getFilePreview(fileId){
+    getFilePreview({fileId}){
         return this.storage.getFilePreview(
             Config.appWriteBucketId,
-            fileId
+            fileId,
         )
     }
 }

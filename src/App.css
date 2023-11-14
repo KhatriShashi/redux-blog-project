@@ -1,11 +1,13 @@
-
-
 /* Navbar */
 .sk-navbar{
     background-color: white;
     position: sticky;
     top: 0;
     z-index: 98;
+}
+.sk-navbar-brand img{
+    width: 200px;
+    margin-left: 20px;
 }
 .sk-navbar-toggle i{
     font-size: 28px;
@@ -25,6 +27,17 @@
 .sk-navbar-offcanvas.active{
     width:300px;
 }
+.navbar-profile{
+    white-space: nowrap;
+}
+.navbar-profile h6{
+    margin: 0;
+    font-family:var(--base-font);
+    font-weight: 500;
+}
+.navbar-profile i{
+    font-size: 22px;
+}
 .sk-offcanvas-close i{
     font-size: 28px;
     font-weight: 600;
@@ -36,6 +49,7 @@
     font-size: 20px;
     font-weight: 500;
     display: block;
+    font-family: var(--base-font);
 }
 .sk-offcanvas-menu a.active{
     color: var(--bg-red);
@@ -51,23 +65,24 @@
     font-size: 20px;
     font-weight: 500;
     white-space: nowrap;
+    font-family: var(--base-font);
 }
 .sk-login {
     position: relative;
     height: 100vh;
     width: 100vw;
-    background-image: url("./assets/Images/login-bg.jpg");
+    background-image: url("./assets/Images/login-bg-min.jpg");
     background-size: cover;
     object-fit: cover;
     background-repeat: no-repeat;
     background-position: center;
-    display: flex; /* Add display: flex; to make sure .sk-login-container is centered */
-    align-items: center; /* Vertically center the child elements */
-    justify-content: center; /* Horizontally center the child elements */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
 }
 
 .sk-login-container {
-    position: relative; /* Change to relative so it stays within the .sk-login flow */
+    position: relative;
     z-index: 97;
     width: 500px;
     height: 400px;
@@ -108,9 +123,80 @@
     font-size: 18px;
     color: #4f4d4d;
 }
+/* post form  */
+.post-form h1{
+    font-family: var(--heading-font);
+    text-align: center;
+}
+.post-form label{
+    font-family: var(--heading-font);
+    font-size: 20px;
+    padding-left: 5px;
+    margin-bottom:4px;
+    font-weight:500;
+}
+.submit-btn{
+    border: none;
+    outline: none;
+    font-size: 18px;
+    padding: 10px 40px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+/* card */
+.sk-your-blog h1{
+    font-family: var(--heading-font);
+}
+.sk-card{
+    overflow: hidden;
+}
+.sk-card .card-img-section{
+    height: 300px;
+    width: 100%;
+}
+.sk-card .card-img-section img{
+    width:100%;
+    height:100%;
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
+}
+.sk-card-content{
+    background-color: white;
+    color: #212121;
+}
+.sk-card-content h1{
+    font-family: var(--heading-font);
+    font-size: 22px;
+}
+.sk-card-content h6{
+    font-family: var(--main-font);
+}
+.blog-page-status{
+    padding: 2px 4px;
+    color:var(--bg-red);
+}
+/* Blog Page */
+.sk-user-blog-page-image {
+    width: 100%;
+    height: 500px;
+}
+.sk-user-blog-page-image img{
+    width:100%;
+    height:100%;
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
+}
+.sk-user-blog-page-content .heading{
+    font-family: var(--heading-font);
+}
 /* media Query */
 @media (max-width: 575.98px) {
     .sk-login-container{
         width: 90%;
+    }
+    .sk-user-blog-page-image{
+        height: 300px;
     }
 }
