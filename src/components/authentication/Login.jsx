@@ -24,7 +24,7 @@ function Login() {
                         setLoginSuccess((prev)=>!prev);
                         setTimeout(() => {
                             navigate("/");
-                        }, 1000);
+                        }, 500);
                     }
                 }
             ).catch((error) => {

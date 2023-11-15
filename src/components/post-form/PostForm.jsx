@@ -6,42 +6,64 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Container } from 'react-bootstrap'
 function PostForm({ post }) {
-    const {id}=useParams();
+    const { id } = useParams();
     const isActive = useSelector((state) => state.auth.status);
     const [successMessage, setSuccessMessage] = useState(false);
-    const [errorMessage,setErrorMessage]=useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [blogData, setBlogData] = useState(null);
+    const navigate = useNavigate();
+    const userData = useSelector((state) => state.auth.userData);
     useEffect(() => {
         if (!isActive) {
             navigate("/");
-        }
-    }, []);
-    const { register, handleSubmit, control, watch, setValue, getValues, formState: { errors } } = useForm(
-        {
-            defaultValues: {
-                title: post?.title || '',
-                slug: post?.slug || '',
-                description: post?.description || '',
-                content: post?.content || '',
+        } else {
+            if (id) {
+                blogServices.getPost({ blogId: id }).then(
+                    (item) => {
+                        setBlogData(item);
+                    }
+                ).catch((error) => {
+                    console.log("Post Form Fetching Data :: error", error);
+                })
             }
         }
-    )
-    const navigate = useNavigate();
-    const userData = useSelector((state) => state.auth.userData);
+    }, [id]);
+    const { register, handleSubmit, control, watch, setValue, getValues, formState: { errors } } = useForm()
+    useEffect(() => {
+        setValue("title", blogData?.title || '');
+        setValue("slug", blogData?.slug || '');
+        setValue("description", blogData?.description || '');
+        setValue("content", blogData?.content || '');
+    }, [blogData,setValue,id]);
+
+
     const onSubmit = async (data) => {
-        // console.log(userData);
-        if (post) {
-            const file = data.image[0] ? blogServices.uploadFile(data.image[0]) : null
-            if (file) {
-                blogServices.deleteFile(post.featuredImage);
-            }
-            const dpPost = await blogServices.updatePost(
-                post.$id, {
-                ...data,
-                featuredImage: file ? file.$id : undefined
-            }
-            )
-            if (dpPost) {
-                navigate(`/post/${dpPost.$id}`)
+        console.log("Enter");
+        if (id) {
+            try {
+                // Upload file
+                const file = data.image[0] ? await blogServices.uploadFile(data.image[0]) : null;
+                if (file) {
+                    await blogServices.deleteFile(blogData.featuredImage);
+                }
+                const dpPost = await blogServices.updatePost({
+                    blogId:id,
+                    ...data,
+                    status: "inactive",
+                    featuredImage: file ? file.$id : blogData.featuredImage
+                });
+
+                if (dpPost) {
+                    // Update state and navigate only if the operations are successful
+                    setSuccessMessage((prev) => !prev);
+                    setTimeout(()=>{
+                        navigate(`/your-blogs`);
+                    },500)
+                }
+            } catch (error) {
+                // Handle errors (e.g., log, setErrorMessage, show user-friendly message)
+                console.error("Error updating post:", error);
+                setErrorMessage("An error occurred while updating the post.");
             }
         } else {
             const file = await blogServices.uploadFile(data.image[0]);
@@ -60,11 +82,11 @@ function PostForm({ post }) {
                         setSuccessMessage((prev) => !prev);
                         setTimeout(() => {
                             navigate('/your-blogs');
-                        }, 600);
+                        }, 500);
                     }
                 } catch (error) {
                     setErrorMessage(error.message);
-                    console.log("PostForm :: error",error);
+                    console.log("PostForm :: error", error);
                 }
             }
         }
@@ -144,29 +166,32 @@ function PostForm({ post }) {
                             required
                         />
                         {errors.content && <p style={{ color: "#fd9298" }}>{errors.content.message}</p>}
+                        {
+                            blogData && (
+                                <div>
+                                    <span>Image Preview:-</span>
+                                    <div className='my-3 sk-post-form-preview-image'>
+                                        <img
+                                            src={blogServices.getFilePreview({ fileId: blogData.featuredImage })}
+                                            alt={blogData.title}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        }
                         <Input
                             label="Upload a Featured Image :"
                             type="file"
                             className="post-form my-3"
                             accept="image/png,image/jpg,image/jpeg,image/gif"
-                            {...register("image", { required: !post })}
+                            {...register("image", { required: id ? false : true })}
                         />
                         {errors.image && <p style={{ color: "#fd9298" }}>{errors.image.message}</p>}
-                        {
-                            post && (
-                                <div className='my-3'>
-                                    <img
-                                        src={blogServices.getFilePreview(post.featuredImage)}
-                                        alt={post.title}
-                                    />
-                                </div>
-                            )
-                        }
                         <p style={{ color: "#fd9298" }}>{`${errorMessage}`}</p>
                         <div className='d-flex justify-content-center'>
                             <Button
                                 type="submit"
-                                btnName={post ? (!successMessage ? "Update Your Blog" : "Update Successfully") :
+                                btnName={id ? (!successMessage ? "Update Your Blog" : "Update Successfully") :
                                     (!successMessage ? "Publish Your Blog" : "Blog Created Successfully")}
                                 className="submit-btn my-2"
                                 style={{

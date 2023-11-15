@@ -33,7 +33,7 @@ export class BlogServices{
             throw error;
         }
     }
-    async updatePost({blogId,title,slug,content,featuredImage,status,userId}){
+    async updatePost({blogId,title,slug,content,featuredImage,status,description}){
         try {
             return await this.databases.updateDocument(
                 Config.appWriteDatabaseId,
@@ -45,8 +45,6 @@ export class BlogServices{
                     featuredImage,
                     content,
                     status,
-                    userId,
-                    postedBy,
                     description
                 }
             )

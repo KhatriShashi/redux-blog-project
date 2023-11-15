@@ -35,7 +35,7 @@ function SignUp() {
                     setSuccessMessage((prev)=>!prev);
                     setTimeout(() => {
                         navigate("/");
-                    }, 1000);
+                    }, 500);
                 }
                 
             } catch (error) {
