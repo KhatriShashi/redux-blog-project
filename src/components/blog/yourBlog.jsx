@@ -13,9 +13,6 @@ function YourBlog() {
   useEffect(() => {
     if (userData) {
       const userId = userData.$id;
-      if (!isLoggedIn) {
-        navigate("/");
-      } else {
         blogServices.getUserAllPost({ userId: userId }).then(
           (data) => {
             dispatch(userAllBlog(data.documents));
@@ -23,7 +20,6 @@ function YourBlog() {
         ).catch((error) => {
           console.log("Your Blog", error);
         })
-      }
     }
   }, [isLoggedIn, navigate, dispatch])
 
