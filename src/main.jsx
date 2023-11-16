@@ -17,19 +17,23 @@ const router = createBrowserRouter([
     children:[
       {
         path:"/",
-        element:<Home/>
+        element:<Home/>,
+        exact:true
       },
       {
-        path:"add-new-blog/:id?",
-        element:<PostForm/>
+        path:"/add-new-blog/:id?",
+        element:<PostForm/>,
+        exact:true
       },
       {
-        path:"your-blogs",
+        path:"/your-blogs",
         element:<YourBlog/>,
+        exact:true
       },
       {
-        path:`your-blogs/:slug/:id`,
-        element:<BlogPage/>
+        path:`/blog-details/:slug/:id`,
+        element:<BlogPage/>,
+        exact:true
       }
     ]
   },

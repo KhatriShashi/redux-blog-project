@@ -49,7 +49,7 @@ function Card({ data }) {
                         data.map((item) => (
                             <div className="col-sm-12 col-md-6 col-lg-4" key={item.$id}>
                                 <div className='card sk-card shadow-sm'>
-                                    <Link to={`/your-blogs/${item.slug}/${item.$id}`}>
+                                    <Link to={`/blog-details/${item.slug}/${item.$id}`}>
 
                                         <div className='card-img-section'>
                                             <img src={blogServices.getFilePreview({ fileId: item.featuredImage })} alt={item.title} />

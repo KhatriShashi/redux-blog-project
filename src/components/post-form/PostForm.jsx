@@ -10,24 +10,20 @@ function PostForm({ post }) {
     const isActive = useSelector((state) => state.auth.status);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [updating,setUpdating]=useState(false);
-    const [creating,setCreating]=useState(false);
+    const [updating, setUpdating] = useState(false);
+    const [creating, setCreating] = useState(false);
     const [blogData, setBlogData] = useState(null);
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
     useEffect(() => {
-        if (!isActive) {
-            navigate("/");
-        } else {
-            if (id) {
-                blogServices.getPost({ blogId: id }).then(
-                    (item) => {
-                        setBlogData(item);
-                    }
-                ).catch((error) => {
-                    console.log("Post Form Fetching Data :: error", error);
-                })
-            }
+        if (id) {
+            blogServices.getPost({ blogId: id }).then(
+                (item) => {
+                    setBlogData(item);
+                }
+            ).catch((error) => {
+                console.log("Post Form Fetching Data :: error", error);
+            })
         }
     }, [id]);
     const { register, handleSubmit, control, watch, setValue, getValues, formState: { errors } } = useForm()
@@ -36,11 +32,10 @@ function PostForm({ post }) {
         setValue("slug", blogData?.slug || '');
         setValue("description", blogData?.description || '');
         setValue("content", blogData?.content || '');
-    }, [blogData,setValue,id]);
+    }, [blogData, setValue, id]);
 
 
     const onSubmit = async (data) => {
-        console.log("Enter");
         if (id) {
             try {
                 // Upload file
@@ -50,7 +45,7 @@ function PostForm({ post }) {
                     await blogServices.deleteFile(blogData.featuredImage);
                 }
                 const dpPost = await blogServices.updatePost({
-                    blogId:id,
+                    blogId: id,
                     ...data,
                     status: "inactive",
                     featuredImage: file ? file.$id : blogData.featuredImage
@@ -59,9 +54,9 @@ function PostForm({ post }) {
                 if (dpPost) {
                     // Update state and navigate only if the operations are successful
                     setSuccessMessage((prev) => !prev);
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         navigate(`/your-blogs`);
-                    },500)
+                    }, 500)
                 }
             } catch (error) {
                 // Handle errors (e.g., log, setErrorMessage, show user-friendly message)
@@ -197,7 +192,7 @@ function PostForm({ post }) {
                         <div className='d-flex justify-content-center'>
                             <Button
                                 type="submit"
-                                btnName={id ? (!successMessage ? (!updating ?"Update Your Blog" : "Updating...") : "Update Successfully") :
+                                btnName={id ? (!successMessage ? (!updating ? "Update Your Blog" : "Updating...") : "Update Successfully") :
                                     (!successMessage ? (!creating ? "Publish Your Blog" : "Uploading...") : "Blog Created Successfully")}
                                 className="submit-btn my-2"
                                 style={{
