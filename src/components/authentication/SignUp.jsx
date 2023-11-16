@@ -113,7 +113,7 @@ function SignUp() {
                         onClick={
                             () => {
                                 setTimeout(() => {
-                                    window.location.href = "/login"
+                                    window.location.href = "#/login"
                                 }, 600);
                             }
                         }>
