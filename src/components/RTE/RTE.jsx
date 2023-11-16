@@ -51,7 +51,6 @@ function RTE({
                             mobile: {
                                 height: 500,
                                 menubar: true,
-                                theme: "mobile",
                                 plugins: [
                                     "image",
                                     "advlist",
