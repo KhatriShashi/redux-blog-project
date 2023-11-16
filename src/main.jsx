@@ -7,10 +7,10 @@ import store from "./app/store.js"
 import { Login,SignUp,YourBlog,Home,BlogPage} from './components/index.js'
 import PostForm from './components/post-form/PostForm.jsx'
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App/>,
