@@ -14,7 +14,6 @@ function Card({ data }) {
 
     //  Delete Blog 
     async function deleteBlogButton(id,featuredImage){
-        console.log(featuredImage);
         let msg=confirm('Are you sure you want to delete this item?');
         if(msg){
                 const file = await blogServices.deleteFile(featuredImage);
