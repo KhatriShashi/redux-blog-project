@@ -200,6 +200,27 @@
 .sk-user-blog-page-content .heading{
     font-family: var(--heading-font);
 }
+.sk-footer{
+    background-color: white;
+}
+.sk-footer-left{
+    position: relative;
+}
+.sk-footer-left img{
+    width: 13rem;
+}
+.sk-footer-left::before{
+    content:"";
+    width: 4px;
+    height:100%;
+    position: absolute;
+    top: 0;
+    background-color: var(--bg-red);
+}
+.sk-footer-left p{
+    color: #565353;
+    font-weight: 500;
+}
 /* media Query */
 @media (max-width: 575.98px) {
     .sk-login-container{

@@ -20,7 +20,6 @@ function RTE({
                         initialValue={defaultValue}
                         apiKey='cxrj2jrg2cbezwugkaafhajkdizzxd45vh15gwrlshoba1sv'
                         init={{
-                            initialValue:"Content",
                             height: 500,
                             menubar: true,
                             plugins: [

@@ -1,13 +1,37 @@
 import React, { useRef } from 'react'
 import blogServices from '../../appwrite/services';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button,PostForm } from '../index'
+import { Button} from '../index'
 function Card({ data }) {
      const updateButtonRef=useRef();
+     const deleteButtonRef=useRef();
      const navigate=useNavigate();
-     function updateButton(id){
+
+    //  Update Blog
+     function updateBlogButton(id){
         navigate(`/add-new-blog/${id}`);
      }
+
+    //  Delete Blog 
+    async function deleteBlogButton(id,featuredImage){
+        console.log(featuredImage);
+        let msg=confirm('Are you sure you want to delete this item?');
+        if(msg){
+                const file = await blogServices.deleteFile(featuredImage);
+                if(file){
+                    blogServices.deletePost({blogId:id}).then(()=>{
+                        alert("Deleted Successfully");
+                        window.location.reload();
+                    })
+                }else{
+                    alert("Failed to Delete");
+                }
+        }else{
+            alert("Deletion canceled");
+        }
+    }
+
+    // Truncate Content
     const truncate = (content, maxLength) => {
         const tempElement = document.createElement('div');
         tempElement.innerHTML = content;
@@ -44,7 +68,7 @@ function Card({ data }) {
                                                 btnName="Update"
                                                 type="button"
                                                 className="post-form submit-btn"
-                                                onClick={()=>updateButton(item.$id)}
+                                                onClick={()=>updateBlogButton(item.$id)}
                                                 ref={updateButtonRef}
                                                 style={{backgroundColor:"black",color:"white",padding:"5px 10px"}}
                                             />
@@ -52,8 +76,8 @@ function Card({ data }) {
                                                 btnName="Delete"
                                                 type="button"
                                                 className="post-form submit-btn"
-                                                onClick={()=>updateButton(item.$id)}
-                                                ref={updateButtonRef}
+                                                onClick={()=>deleteBlogButton(item.$id,item.featuredImage)}
+                                                ref={deleteButtonRef}
                                                 style={{backgroundColor:"#fd9298",color:"white",padding:"5px 10px"}}
                                             />
                                         </div>

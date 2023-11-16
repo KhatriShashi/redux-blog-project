@@ -10,6 +10,8 @@ function PostForm({ post }) {
     const isActive = useSelector((state) => state.auth.status);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [updating,setUpdating]=useState(false);
+    const [creating,setCreating]=useState(false);
     const [blogData, setBlogData] = useState(null);
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
@@ -42,6 +44,7 @@ function PostForm({ post }) {
         if (id) {
             try {
                 // Upload file
+                setUpdating(true);
                 const file = data.image[0] ? await blogServices.uploadFile(data.image[0]) : null;
                 if (file) {
                     await blogServices.deleteFile(blogData.featuredImage);
@@ -62,10 +65,12 @@ function PostForm({ post }) {
                 }
             } catch (error) {
                 // Handle errors (e.g., log, setErrorMessage, show user-friendly message)
+                setUpdating(false);
                 console.error("Error updating post:", error);
                 setErrorMessage("An error occurred while updating the post.");
             }
         } else {
+            setCreating(true);
             const file = await blogServices.uploadFile(data.image[0]);
             if (file) {
                 const fileId = file.$id
@@ -85,6 +90,7 @@ function PostForm({ post }) {
                         }, 500);
                     }
                 } catch (error) {
+                    setCreating(false);
                     setErrorMessage(error.message);
                     console.log("PostForm :: error", error);
                 }
@@ -191,8 +197,8 @@ function PostForm({ post }) {
                         <div className='d-flex justify-content-center'>
                             <Button
                                 type="submit"
-                                btnName={id ? (!successMessage ? "Update Your Blog" : "Update Successfully") :
-                                    (!successMessage ? "Publish Your Blog" : "Blog Created Successfully")}
+                                btnName={id ? (!successMessage ? (!updating ?"Update Your Blog" : "Updating...") : "Update Successfully") :
+                                    (!successMessage ? (!creating ? "Publish Your Blog" : "Uploading...") : "Blog Created Successfully")}
                                 className="submit-btn my-2"
                                 style={{
                                     backgroundColor: successMessage ? "#83f3b8" : "#000000",
