@@ -185,6 +185,10 @@
     padding: 2px 4px;
     color:var(--bg-red);
 }
+.blog-page-content img{
+    max-width: 100%;
+    height: auto;
+}
 /* Blog Page */
 .sk-user-blog-page-image {
     width: 100%;
@@ -228,5 +232,8 @@
     }
     .sk-user-blog-page-image{
         height: 300px;
+    }
+    h1{
+        font-size: 28px;
     }
 }

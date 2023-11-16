@@ -22,7 +22,7 @@ function BlogPage() {
                     <div className='p-3 sk-user-blog-page-content'>
                         <h1 className='heading'>{item?.title}</h1>
                         <p><span>Description: </span>{item?.description}</p>
-                        <div className='mb-2'>{parse(item?.content)}</div>
+                        <div className='mb-2 blog-page-content'>{parse(item?.content)}</div>
                     </div>
                 </div>
             </div>
