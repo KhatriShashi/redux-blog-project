@@ -3,8 +3,6 @@ import blogServices from '../../appwrite/services';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button} from '../index'
 function Card({ data }) {
-     const updateButtonRef=useRef();
-     const deleteButtonRef=useRef();
      const navigate=useNavigate();
 
     //  Update Blog
@@ -61,14 +59,15 @@ function Card({ data }) {
                                     </Link>
 
                                     <div className='px-3 pb-3'>
-                                        <span className='blog-page-status'>Status:-{item.status === "inactive" ? "In Review" : "Active"}</span>
+                                        <span className='blog-page-status'>
+                                            Status:-{item.status === "inactive" ? "In Review" : "Active"}
+                                        </span>
                                         <div className='mt-1 d-flex justify-content-between'>
                                             <Button
                                                 btnName="Update"
                                                 type="button"
                                                 className="post-form submit-btn"
                                                 onClick={()=>updateBlogButton(item.$id)}
-                                                ref={updateButtonRef}
                                                 style={{backgroundColor:"black",color:"white",padding:"5px 10px"}}
                                             />
                                             <Button
@@ -76,13 +75,10 @@ function Card({ data }) {
                                                 type="button"
                                                 className="post-form submit-btn"
                                                 onClick={()=>deleteBlogButton(item.$id,item.featuredImage)}
-                                                ref={deleteButtonRef}
                                                 style={{backgroundColor:"#fd9298",color:"white",padding:"5px 10px"}}
                                             />
                                         </div>
-                                        
                                     </div>
-
                                 </div>
                             </div>
                         ))

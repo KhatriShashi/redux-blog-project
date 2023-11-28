@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-    articles:[]
+    articles:[],
+    allActiveArticles:[]
 }
 
 export const  blogSlice = createSlice({
@@ -10,9 +11,12 @@ export const  blogSlice = createSlice({
     reducers:{
         userAllBlog:(state,action)=>{
             state.articles=[...action.payload];
+        },
+        allActiveBlog:(state,action)=>{
+            state.allActiveArticles=[...action.payload];
         }
     }
 })
 
-export const {userAllBlog} = blogSlice.actions;
+export const {userAllBlog,allActiveBlog} = blogSlice.actions;
 export const blogReducer = blogSlice.reducer;
