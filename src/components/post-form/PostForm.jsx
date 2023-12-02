@@ -5,8 +5,10 @@ import blogServices from '../../appwrite/services'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Container } from 'react-bootstrap'
+import Loader from '../Loader/Loader'
 function PostForm({ post }) {
     const { id } = useParams();
+    const [loading,setLoading] = useState(true);
     const isActive = useSelector((state) => state.auth.status);
     const [successMessage, setSuccessMessage] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -32,6 +34,7 @@ function PostForm({ post }) {
         setValue("slug", blogData?.slug || '');
         setValue("description", blogData?.description || '');
         setValue("content", blogData?.content || '');
+        setLoading(false);
     }, [blogData, setValue, id]);
 
 
@@ -115,7 +118,7 @@ function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
     return (
         <>
-            <Container className='mt-4'>
+            {loading ? <Loader/> : <Container className='mt-4'>
                 <div className='post-form'>
                     <h1 className='mb-3'>{post ? "The World Awaits: Update Your Blog" : "The World Awaits: Create Your Blog"}</h1>
                     <form onSubmit={handleSubmit(onSubmit)} >
@@ -203,7 +206,7 @@ function PostForm({ post }) {
                         </div>
                     </form>
                 </div>
-            </Container>
+            </Container>}
         </>
     )
 }

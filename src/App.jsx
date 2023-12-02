@@ -9,13 +9,16 @@ import { login, logout } from './features/blog/authSlice';
 import { Navbar, Footer } from './components/index.js';
 import blogServices from './appwrite/services.js';
 import { userAllBlog,allActiveBlog} from './features/blog/blogSlice.js'
+import Loader from './components/Loader/Loader.jsx';
 function App() {
   const dispatch = useDispatch();
+  const [Loading,setLoading]=useState(true);
   useEffect(() => {
 
     blogServices.getAllActivePost().then(
       (data) => {
         if (data) {
+          setLoading(false);
           dispatch(allActiveBlog(data.documents));
         }
       }
@@ -48,7 +51,10 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      
+      {
+        !Loading ? <Outlet /> : <Loader/>
+      }
       <Footer />
     </>
   )

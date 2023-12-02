@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { Controller } from 'react-hook-form'
 function RTE({
@@ -8,6 +9,12 @@ function RTE({
     className = "",
     defaultValue = ""
 }) {
+    const [editorLoaded, setEditorLoaded] = useState(false);
+
+    useEffect(() => {
+        import('@tinymce/tinymce-react').then(() => setEditorLoaded(true));
+    }, []);
+
     return (
         <div className={className}>
             {label && <label>{label}</label>}
@@ -16,7 +23,7 @@ function RTE({
                 control={control}
                 rules={{ required: 'This field is required' }}
                 render={({ field: { onChange } }) => (
-                    <Editor
+                    editorLoaded && <Editor
                         initialValue={defaultValue}
                         apiKey='cxrj2jrg2cbezwugkaafhajkdizzxd45vh15gwrlshoba1sv'
                         init={{
@@ -68,14 +75,17 @@ function RTE({
                                     "insertdatetime",
                                     "media",
                                     "table",
-                                    "paste",
                                     "wordcount",
                                     "help"
                                 ],
-                                toolbar: "undo redo | formatselect | bold italic backcolor forecolor removeformat | \
+                                toolbar:
+                                    "undo redo | formatselect | bold italic backcolor forecolor removeformat | \
         alignleft aligncenter alignright alignjustify | \
         bullist numlist outdent indent | link image media table | help",
                                 content_style: "body { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px}",
+                                paste_block_drop: false,
+                                paste_data_images: true,
+                                paste_as_text: true,
                             }
                         }}
                         onEditorChange={onChange}
