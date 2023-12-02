@@ -3,7 +3,7 @@ import logo from '../../assets/Images/logo.png'
 function Footer() {
   return (
     <>
-      <div className="container-fluid sk-footer py-5 mt-3">
+      <div className="container-fluid sk-footer py-5">
         <div className="row">
           <div className="col-12 col-md-6 col-lg-6">
             <div className="sk-footer-left">
