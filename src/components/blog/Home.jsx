@@ -19,7 +19,7 @@ function Home() {
   return (
     <>
       {
-        activeBlog.length!==0  ? <div className="container py-5">
+        activeBlog.length!==0  ? <div className="container py-lg-5 py-md-5 py-2">
           <Carousel>
             {
               activeBlog.slice(0, 5).map((item) => (
