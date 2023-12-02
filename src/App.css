@@ -268,4 +268,7 @@
     .heroImageCarousel{
         height:calc(100vh - 88px - 234px - 100px);
     }
+    .carousel-caption-text{
+        display: none;
+    }
 }

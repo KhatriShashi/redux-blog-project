@@ -18,7 +18,7 @@ const  CarouselItem = React.forwardRef((
                     <img src={imageSrc} alt={imageAlt}/>
                     <Carousel.Caption>
                         <h2>{captionHeading}</h2>
-                        <p>{captionText}</p>
+                        <p className='carousel-caption-text'>{captionText}</p>
                     </Carousel.Caption>
                     </Link>
                 </Carousel.Item>
