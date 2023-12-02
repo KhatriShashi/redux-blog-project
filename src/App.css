@@ -266,6 +266,6 @@
         font-size: 18px;
     }
     .heroImageCarousel{
-        height: 28rem;
+        height:calc(100vh - 88px - 234px - 100px);
     }
 }
